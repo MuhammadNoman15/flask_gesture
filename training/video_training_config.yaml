@@ -1,0 +1,39 @@
+# Configuration for ASL Gesture Recognition Training from Videos
+
+# Dataset settings
+dataset:
+  path: "dataset/ASL examples"
+  sequence_length: 8  # Number of frames per sequence (matches main.py buffer size)
+  test_split: 0.2     # Fraction of data for validation
+
+# Model architecture
+model:
+  input_size: 21      # Hand landmark features
+  hidden_size: 128    # LSTM hidden size
+  num_layers: 2       # Number of LSTM layers
+  dropout: 0.2        # Dropout rate
+
+# Training settings  
+training:
+  epochs: 50
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  
+# Optimization
+optimizer:
+  type: "adam"
+  lr_scheduler: "step"
+  step_size: 15
+  gamma: 0.1
+
+# Output settings
+output:
+  model_dir: "models/gesture_recognition"
+  save_best: true
+  save_latest: true
+  log_interval: 10
+
+# Hardware
+device: "auto"  # auto, cpu, cuda
+num_workers: 4  # For data loading

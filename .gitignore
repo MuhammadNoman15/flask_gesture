@@ -1,0 +1,35 @@
+# Virtual Environment
+avatar_env/
+
+# Dataset files (large video files)
+dataset/
+
+# Archive files
+project.zip
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyTorch model files (optional - uncomment if you want to exclude large model files)
+# *.pth
+# *.pt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp 

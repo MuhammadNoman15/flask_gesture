@@ -1,0 +1,36 @@
+# Model Configuration
+input_size: 63  # 21 landmarks * 3 coordinates
+hidden_size: 128
+num_classes: 100  # Number of sign language gestures
+num_layers: 2
+dropout: 0.2
+
+# Training Configuration
+batch_size: 32
+num_workers: 4
+epochs: 100
+learning_rate: 0.001
+weight_decay: 0.0001
+lr_patience: 5  # Number of epochs to wait before reducing learning rate
+
+# Dataset Configuration
+sequence_length: 30  # Number of frames per sequence
+train_val_split: 0.8  # Ratio of training to validation data
+
+# Augmentation Configuration
+augmentation:
+  enabled: true
+  rotation_range: 15  # Degrees
+  scale_range: 0.1
+  translation_range: 0.1
+  noise_std: 0.01
+
+# Logging Configuration
+log_interval: 100  # Number of batches between logging
+save_interval: 5  # Number of epochs between model saves
+
+# Early Stopping Configuration
+early_stopping:
+  enabled: true
+  patience: 10  # Number of epochs to wait before early stopping
+  min_delta: 0.001  # Minimum change in validation loss to be considered improvement 
