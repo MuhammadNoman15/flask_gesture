@@ -509,7 +509,7 @@
                     <div class="confidence-text" id="confidence-text">Confidence: 0%</div>
                 </div>
 
-                <div class="recent-predictions">
+                <!-- <div class="recent-predictions">
                     <div class="predictions-header">
                         <div class="predictions-title">Recent Predictions</div>
                         <button class="clear-btn" id="clear-predictions">
@@ -521,7 +521,7 @@
                             No predictions yet
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -552,7 +552,9 @@
         // Event listeners
         startBtn.addEventListener('click', startCamera);
         stopBtn.addEventListener('click', stopCamera);
-        clearBtn.addEventListener('click', clearPredictions);
+        if (clearBtn) {
+            clearBtn.addEventListener('click', clearPredictions);
+        }
 
         // Socket event handlers
         socket.on('connect', function() {
@@ -696,22 +698,26 @@
                 const response = await fetch('/get_predictions');
                 const data = await response.json();
                 
-                totalGestures.textContent = data.total_gestures;
+                if (totalGestures) {
+                    totalGestures.textContent = data.total_gestures;
+                }
                 recentPredictions = data.recent_predictions;
                 
-                // Update predictions list
-                if (recentPredictions.length === 0) {
-                    predictionsList.innerHTML = '<div style="text-align: center; color: #6c757d; padding: 20px;">No predictions yet</div>';
-                } else {
-                    predictionsList.innerHTML = recentPredictions.map(pred => `
-                        <div class="prediction-item">
-                            <div class="prediction-gesture">${pred.gesture}</div>
-                            <div class="prediction-details">
-                                <div class="prediction-confidence">Confidence: ${pred.confidence}%</div>
-                                <div class="prediction-time">${pred.timestamp}</div>
+                // Update predictions list only if element exists
+                if (predictionsList) {
+                    if (recentPredictions.length === 0) {
+                        predictionsList.innerHTML = '<div style="text-align: center; color: #6c757d; padding: 20px;">No predictions yet</div>';
+                    } else {
+                        predictionsList.innerHTML = recentPredictions.map(pred => `
+                            <div class="prediction-item">
+                                <div class="prediction-gesture">${pred.gesture}</div>
+                                <div class="prediction-details">
+                                    <div class="prediction-confidence">Confidence: ${pred.confidence}%</div>
+                                    <div class="prediction-time">${pred.timestamp}</div>
+                                </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `).join('');
+                    }
                 }
             } catch (error) {
                 console.error('Error updating predictions:', error);
@@ -729,7 +735,7 @@
                 
                 const result = await response.json();
                 
-                if (result.success) {
+                if (result.success && predictionsList) {
                     predictionsList.innerHTML = '<div style="text-align: center; color: #6c757d; padding: 20px;">No predictions yet</div>';
                 }
             } catch (error) {
